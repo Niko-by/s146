@@ -27,17 +27,47 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // Function to check GPS permission status
+    async function checkGPSPermission() {
+        try {
+            const permission = await navigator.permissions.query({ name: 'geolocation' });
+            if (permission.state === 'granted') {
+                console.log("Granted");
+                // If permission is already granted, get coordinates and show PDF
+                _location = await getCoordinates();
+                gpsRequest.style.display = 'flex';
+                gpsDenied.style.display = 'none';
+                pdfContainer.style.display = 'block';
+                initPDFViewer();
+            } else if (permission.state === 'prompt') {
+                console.log("Promt");
+                // If permission is not granted, show GPS request
+                // gpsRequest.style.display = 'block';
+                gpsRequest.style.display = 'flex';
+                gpsDenied.style.display = 'none';
+            } else {
+                console.log("Else...");
+                // If permission is denied, show GPS denied message
+                gpsDenied.style.display = 'flex'; // Меняем на flex
+            }
+        } catch (error) {
+            console.error('Error checking GPS permission:', error);
+            gpsDenied.style.display = 'flex'; // Меняем на flex
+        }
+    }
+
     // Event listener for the GPS request button
     requestGPSButton.addEventListener('click', requestGPSAccess);
 
     // Initial GPS access request on page load
-    // requestGPSAccess();
+    checkGPSPermission();
 });
 
 async function initPDFViewer() {
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.5.207/pdf.worker.min.js';
 
     const pdfViewer = document.getElementById('pdfViewer');
+    pdfViewer.style.display = 'none';
     const signaturePadCanvas = document.getElementById('signaturePadModal');
     const signaturePadModal = new SignaturePad(signaturePadCanvas, {
         minWidth: 1.5,
@@ -57,13 +87,29 @@ async function initPDFViewer() {
     const loader = document.getElementById('loader');
     const overlay = document.getElementById('overlay');
     const startFinishBtn = document.getElementById('startFinishBtn');
+
+    // 
     let pdfDoc = null;
     let signCoordinates = [];
     let signatures = [];
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code'); // Получение параметра code из URL
 
-    const response = await fetch(`${_baseUrl}/signingTest?code=${code}`);
+    let response;
+    try {
+        // Показываем лоадер и оверлей
+        overlay.style.display = 'block';
+        loader.style.display = 'block';
+        response = await fetch(`${_baseUrl}/signingTest?code=${code}`);
+        pdfViewer.style.display = 'block';
+    } catch (error) {
+        console.log("Error load PDF");
+    }
+
+    // Показываем лоадер и оверлей
+    overlay.style.display = 'none';
+    loader.style.display = 'none';
+
     const result = await response.json();
     const pdfBase64 = result.data.pdf;
     signCoordinates = result.data.signCoords;
@@ -80,6 +126,9 @@ async function initPDFViewer() {
         renderAllPages();
         loader.style.display = 'none';
     });
+
+    // Показываем кнопку после загрузки PDF
+    startFinishBtn.classList.remove('hidden');
 
     /* Sign font style start */
     const changeStyleBtn = document.getElementById('changeStyle');
