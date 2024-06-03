@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 initPDFViewer(); // Initialize PDF viewer after getting GPS access
             } else {
                 gpsRequest.style.display = 'none';
-                gpsDenied.style.display = 'flex'; // Меняем на flex
+                gpsDenied.style.display = 'flex';
             }
         } catch (error) {
             console.error('Error getting GPS access:', error);
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 console.log("Granted");
                 // If permission is already granted, get coordinates and show PDF
                 _location = await getCoordinates();
-                gpsRequest.style.display = 'flex';
+                gpsRequest.style.display = 'none';
                 gpsDenied.style.display = 'none';
                 pdfContainer.style.display = 'block';
                 initPDFViewer();
