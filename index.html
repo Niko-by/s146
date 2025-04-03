@@ -7,8 +7,83 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/main.css">
+  <style>
+    .hero-section {
+      background: linear-gradient(135deg, #1b2b3b, #688187);
+      color: white;
+      padding: 2rem 2rem;
+      text-align: center;
+      border-radius: 8px;
+      margin-bottom: 3rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-section h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-section p {
+      font-size: 1.25rem;
+      opacity: 0.9;
+    }
+
+    .hero-section .decoration {
+      width: 50px;
+      height: 4px;
+      background: white;
+      margin: 1rem auto;
+      border-radius: 2px;
+    }
+
+    .contact-form {
+      background: #f8f9fa;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-info {
+      background: #e9ecef;
+      padding: 2rem;
+      border-radius: 8px;
+      margin-top: 2rem;
+    }
+
+    .contact-info h2 {
+      color: #007bff;
+      margin-bottom: 1rem;
+    }
+
+    .form-control:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+  </style>
   <script src="js/jquery-3.5.1.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <script>
+    function submitForm() {
+      event.preventDefault();
+      $('#successMessage').removeClass('d-none');
+      $('#contactForm')[0].reset();
+      setTimeout(function () {
+        $('#successMessage').addClass('d-none');
+      }, 3000);
+    }
+  </script>
 </head>
 
 <body>
@@ -30,7 +105,7 @@
             <a class="nav-link" href="https://github.com/Niko-by" target="_blank">GitHub</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="privacy.html">Privacy & Terms</a>
+            <!-- <a class="nav-link" href="privacy.html">Privacy & Terms</a> -->
           </li>
         </ul>
       </div>
@@ -54,36 +129,21 @@
 
   <div class="container">
 
-    <!-- 
-    <div class="card-deck mb-3 mb-sm-5">
+    <div class="hero-section">
+      <h1>Welcome to S146</h1>
+      <!-- <div class="decoration"></div> -->
+      <p>Creating innovative solutions for a better tomorrow. Get in touch with us today!</p>
+    </div>
 
-      <div class="card">
-        <img src="img/logo1.png" class="card-img-top" alt="">
-        <div class="card-body">
-          <h5 class="card-title">App 1</h5>
-          <p class="card-text">Desc</p>
-          <a href="https://play.google.com/store/apps/details?id="
-            class="btn btn-primary stretched-link" target="_blank">Google Play</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="img/logo2.png" class="card-img-top" alt="">
-        <div class="card-body">
-          <h5 class="card-title">App 2</h5>
-          <p class="card-text">Desc</p>
-          <a href="https://play.google.com/store/apps/details?id="
-            class="btn btn-primary stretched-link" target="_blank">Google Play</a>
-        </div>
-      </div>
-
-    </div> -->
+    <div class="contact-info">
+      <h2>Contact Information</h2>
+      <p>For all inquiries, please contact us at:</p>
+      <a href="mailto:nikolay.devstudio@gmail.com" class="text-dark font-weight-bold">
+        nikolay.devstudio@gmail.com
+      </a>
+    </div>
 
   </div>
-
-  <footer class="footer container-fluid text-center text-muted p-5">
-    <span>Made with ❤ using <a href="https://getbootstrap.com/" target="_blank">Bootstrap</a></span>
-  </footer>
 
 </body>
 
